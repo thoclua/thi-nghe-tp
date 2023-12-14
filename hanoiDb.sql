@@ -290,14 +290,22 @@ UNLOCK TABLES;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `updateUserpassword`(IN param1 varchar(100))
-BEGIN
-    -- Thân stored procedure
-    -- Bạn có thể sử dụng param1 và param2 như là các biến trong stored procedure
-    
-    -- Ví dụ:
-    update organizers set password_hash = param1;
-    
-    -- Hoặc thực hiện các thao tác khác...
+BEGIN
+
+    -- Thân stored procedure
+
+    -- Bạn có thể sử dụng param1 và param2 như là các biến trong stored procedure
+
+    
+
+    -- Ví dụ:
+
+    update organizers set password_hash = param1;
+
+    
+
+    -- Hoặc thực hiện các thao tác khác...
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -314,9 +322,11 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`` PROCEDURE `usp_Channal_GetAll`()
-begin
-	select * from channels ;
+CREATE  PROCEDURE `usp_Channal_GetAll`()
+begin
+
+	select * from channels ;
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -333,26 +343,45 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `usp_Event_CreateOrUpdate`(in p_id int, 
- in p_organizer_id int, 
- in p_name varchar(255), 
- in p_slug varchar(255), 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `usp_Event_CreateOrUpdate`(in p_id int, 
+
+ in p_organizer_id int, 
+
+ in p_name varchar(255), 
+
+ in p_slug varchar(255), 
+
  in p_date datetime)
-begin
-	if p_id = 0 THEN
-		insert into events (organizer_id, name, slug, date) values (p_organizer_id, p_name, p_slug, p_date);
-	end if;
-	if p_id > 0 then
-		update events
-		set 
-			organizer_id = p_organizer_id,
-			name = p_name,
-			slug = p_slug,
-			date = p_date
-		where id = p_id;
-	end if;
-	
-	
+begin
+
+	if p_id = 0 THEN
+
+		insert into events (organizer_id, name, slug, date) values (p_organizer_id, p_name, p_slug, p_date);
+
+	end if;
+
+	if p_id > 0 then
+
+		update events
+
+		set 
+
+			organizer_id = p_organizer_id,
+
+			name = p_name,
+
+			slug = p_slug,
+
+			date = p_date
+
+		where id = p_id;
+
+	end if;
+
+	
+
+	
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -370,8 +399,10 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `usp_Event_Delete`(in p_id int)
-begin
-	delete from events where id = p_id;
+begin
+
+	delete from events where id = p_id;
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -389,8 +420,10 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `usp_Event_GetAll`()
-begin
-	select * from events;
+begin
+
+	select * from events;
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -408,8 +441,10 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `usp_Event_GetEventByEventId`(in p_id int)
-begin 
-	select * from events e where e.id = p_id;
+begin 
+
+	select * from events e where e.id = p_id;
+
 end ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -427,14 +462,22 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `usp_Event_GetEventByOrganizer`(in p_orgainzer_id int)
-begin
-	
-	select e.id, e.name , e.organizer_id , e.slug , e.`date` , count(r.id) as count_member
-	from events e 
-	left join event_tickets et on e.id = et.event_id 
-	left join registrations r on r.ticket_id = et.id 
-	where e.organizer_id  =  p_orgainzer_id
-	group by e.id, e.name , e.organizer_id , e.slug , e.`date` ;
+begin
+
+	
+
+	select e.id, e.name , e.organizer_id , e.slug , e.`date` , count(r.id) as count_member
+
+	from events e 
+
+	left join event_tickets et on e.id = et.event_id 
+
+	left join registrations r on r.ticket_id = et.id 
+
+	where e.organizer_id  =  p_orgainzer_id
+
+	group by e.id, e.name , e.organizer_id , e.slug , e.`date` ;
+
 end ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -451,25 +494,43 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `usp_Room_CreateOrUpdate`(
-in p_id int,
-in p_channel_id int,
-in p_name varchar(255),
-in p_capacity int
+CREATE DEFINER=`root`@`localhost` PROCEDURE `usp_Room_CreateOrUpdate`(
+
+in p_id int,
+
+in p_channel_id int,
+
+in p_name varchar(255),
+
+in p_capacity int
+
 )
-begin
-	if p_id = 0 THEN
-		insert into rooms (channel_id, name, capacity) values (p_channel_id, p_name, p_capacity);
-	end if;
-	if p_id > 0 then
-		update rooms 
-		set 
-			channel_id = p_channel_id,
-			name = p_name,
-			capacity = p_capacity
-		where id = p_id;
-	end if;
-
+begin
+
+	if p_id = 0 THEN
+
+		insert into rooms (channel_id, name, capacity) values (p_channel_id, p_name, p_capacity);
+
+	end if;
+
+	if p_id > 0 then
+
+		update rooms 
+
+		set 
+
+			channel_id = p_channel_id,
+
+			name = p_name,
+
+			capacity = p_capacity
+
+		where id = p_id;
+
+	end if;
+
+
+
 end ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -487,8 +548,10 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `usp_Room_Delete`()
-begin
-	delete  from rooms where id = p_id;
+begin
+
+	delete  from rooms where id = p_id;
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -506,8 +569,10 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `usp_Room_GetAll`()
-begin
-	select * from rooms ;
+begin
+
+	select * from rooms ;
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -525,15 +590,24 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `usp_Room_Getcapacity_ByEventId`(in p_eventId int)
-begin
-select s.title ,r.capacity , e.name  , e.date  , count(sr.session_id) as count_registrations
-from events e 
-join channels c on e.id  = c.event_id 
-join rooms r on r.channel_id  = c.id  
-join sessions s on s.room_id = r.id 
-join session_registrations sr on s.id = sr.session_id 
-where event_id = p_eventId
-group by s.title , r.capacity , e.name , e.date;
+begin
+
+select s.title ,r.capacity , e.name  , e.date  , count(sr.session_id) as count_registrations
+
+from events e 
+
+join channels c on e.id  = c.event_id 
+
+join rooms r on r.channel_id  = c.id  
+
+join sessions s on s.room_id = r.id 
+
+join session_registrations sr on s.id = sr.session_id 
+
+where event_id = p_eventId
+
+group by s.title , r.capacity , e.name , e.date;
+
 end ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -551,22 +625,38 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `usp_Room_GetRoomByEventId`(in p_event_id int)
-begin
-	
-	select q1.channel_id, q1.event_id, q1.channel_name, count(s.id) as count_session, q1.count_room
-	from (
-		select c.id as channel_id, e.id as event_id , c.name as channel_name , count(r.id) as count_room
-		from events e 
-		join channels c on e.id  = c.event_id 
-		join rooms r on r.channel_id  = c.id 
-		where e.id = p_event_id
-		group by c.id, e.id , c.name
-	) as q1
-	join rooms r2 on r2.channel_id = q1.channel_id
-	join sessions s on r2.id = s.room_id
-	group by q1.channel_id, q1.event_id, q1.channel_name, q1.count_room;
-	
-	
+begin
+
+	
+
+	select q1.channel_id, q1.event_id, q1.channel_name, count(s.id) as count_session, q1.count_room
+
+	from (
+
+		select c.id as channel_id, e.id as event_id , c.name as channel_name , count(r.id) as count_room
+
+		from events e 
+
+		join channels c on e.id  = c.event_id 
+
+		join rooms r on r.channel_id  = c.id 
+
+		where e.id = p_event_id
+
+		group by c.id, e.id , c.name
+
+	) as q1
+
+	join rooms r2 on r2.channel_id = q1.channel_id
+
+	join sessions s on r2.id = s.room_id
+
+	group by q1.channel_id, q1.event_id, q1.channel_name, q1.count_room;
+
+	
+
+	
+
 end ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -584,12 +674,18 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `usp_Room_GetRooms_ByEventId`(in p_event_id int)
-begin
-select r.name ,r.capacity
-from events e 
-	join channels c on e.id = c.event_id 
-	join rooms r on r.channel_id = c.id 
-	where e.id = p_event_id;
+begin
+
+select r.name ,r.capacity
+
+from events e 
+
+	join channels c on e.id = c.event_id 
+
+	join rooms r on r.channel_id = c.id 
+
+	where e.id = p_event_id;
+
 	end ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -606,35 +702,63 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `usp_Sessions_CreateOrUpdate`(
-in p_id int, 
- in p_room_id int, 
- in p_title varchar(255), 
- in p_description varchar(255), 
- in p_speaker varchar(225),
- in p_start datetime,
- in p_end datetime,
- in p_type varchar(225),
+CREATE DEFINER=`root`@`localhost` PROCEDURE `usp_Sessions_CreateOrUpdate`(
+
+in p_id int, 
+
+ in p_room_id int, 
+
+ in p_title varchar(255), 
+
+ in p_description varchar(255), 
+
+ in p_speaker varchar(225),
+
+ in p_start datetime,
+
+ in p_end datetime,
+
+ in p_type varchar(225),
+
  in p_cost decimal)
-begin
-	if p_id = 0 then
-	insert  into sessions (room_id, title, description, speaker, start, end, type, cost) values(p_room_id, p_title, p_description, p_speaker, p_start, p_end, p_type, p_cost);
-end if;
-if p_id > 0 then
-update sessions 
-set 
-room_id = p_room_id,
-title = p_title,
-description = p_description,
-speaker = p_speaker,
-start = p_start,
-end = p_end,
-type = p_type,
-cost = p_cost
-where id = p_id;
-end if;
-
-
+begin
+
+	if p_id = 0 then
+
+	insert  into sessions (room_id, title, description, speaker, start, end, type, cost) values(p_room_id, p_title, p_description, p_speaker, p_start, p_end, p_type, p_cost);
+
+end if;
+
+if p_id > 0 then
+
+update sessions 
+
+set 
+
+room_id = p_room_id,
+
+title = p_title,
+
+description = p_description,
+
+speaker = p_speaker,
+
+start = p_start,
+
+end = p_end,
+
+type = p_type,
+
+cost = p_cost
+
+where id = p_id;
+
+end if;
+
+
+
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -652,8 +776,10 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `usp_Sessions_Delete`()
-begin
-	delete from sessions where id=p_id;
+begin
+
+	delete from sessions where id=p_id;
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -671,8 +797,10 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `usp_Sessions_GetAll`()
-begin
-	select * from sessions ;
+begin
+
+	select * from sessions ;
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -690,13 +818,20 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `usp_Session_GetSessions_ByEventId`(in p_event_id int)
-begin
-	select s.title , s.`start` , s.`end` , s.speaker , c.name as channel_name, r.name as room_name, s.`type`
-	from events e 
-	join channels c on e.id = c.event_id 
-	join rooms r on r.channel_id = c.id 
-	join sessions s on s.room_id = r.id 
-	where e.id = p_event_id;
+begin
+
+	select s.title , s.`start` , s.`end` , s.speaker , c.name as channel_name, r.name as room_name, s.`type`
+
+	from events e 
+
+	join channels c on e.id = c.event_id 
+
+	join rooms r on r.channel_id = c.id 
+
+	join sessions s on s.room_id = r.id 
+
+	where e.id = p_event_id;
+
 end ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -713,26 +848,45 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `usp_Ticket_CreatOrUpdate`(
-in p_id int,
-in p_event_id int,
-in p_name varchar(255),
-in p_cost varchar(255),
+CREATE DEFINER=`root`@`localhost` PROCEDURE `usp_Ticket_CreatOrUpdate`(
+
+in p_id int,
+
+in p_event_id int,
+
+in p_name varchar(255),
+
+in p_cost varchar(255),
+
 in p_special_validity varchar(255))
-begin
-	if p_id = 0 then
-	insert into event_tickets (event_id, name, cost, special_validity) values(p_event_id, p_name, p_cost, p_special_validity);
-end if;
-if p_id >0 then
-update event_tickets
-set 
-event_id = p_event_id,
-name = p_name,
-cost = p_cost,
-special_validity = p_special_validity
-where id = p_id;
-end if;
-
+begin
+
+	if p_id = 0 then
+
+	insert into event_tickets (event_id, name, cost, special_validity) values(p_event_id, p_name, p_cost, p_special_validity);
+
+end if;
+
+if p_id >0 then
+
+update event_tickets
+
+set 
+
+event_id = p_event_id,
+
+name = p_name,
+
+cost = p_cost,
+
+special_validity = p_special_validity
+
+where id = p_id;
+
+end if;
+
+
+
 end ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -750,8 +904,10 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `usp_Ticket_Delete`()
-begin
-	delete from event_tickets  where id = p_id;
+begin
+
+	delete from event_tickets  where id = p_id;
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -769,8 +925,10 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `usp_Ticket_GetAll`()
-begin
-	select *from event_tickets ;
+begin
+
+	select *from event_tickets ;
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -788,8 +946,10 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `usp_Ticket_GetTickets_ByEventId`(in p_eventId int)
-begin
-	select * from event_tickets where event_id=p_eventId ;
+begin
+
+	select * from event_tickets where event_id=p_eventId ;
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -807,10 +967,14 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `usp_User_doLogin`(IN p_email VARCHAR(255), IN p_password VARCHAR(255))
-BEGIN
-
-    SELECT * FROM organizers WHERE email LIKE CONCAT('%', p_email, '%') AND password_hash LIKE CONCAT('%', p_password, '%');
-
+BEGIN
+
+
+
+    SELECT * FROM organizers WHERE email LIKE CONCAT('%', p_email, '%') AND password_hash LIKE CONCAT('%', p_password, '%');
+
+
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
